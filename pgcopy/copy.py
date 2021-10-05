@@ -5,6 +5,7 @@ import struct
 import sys
 import tempfile
 import threading
+import uuid
 
 from datetime import date, datetime
 
@@ -106,6 +107,9 @@ def jsonb_formatter(val):
 
 
 def uuid_formatter(guid):
+    if isinstance(guid, str):
+        guid = uuid.UUID(guid)
+
     return 'i2Q', (16, (guid.int >> 64) & MAX_INT64, guid.int & MAX_INT64)
 
 
